@@ -89,10 +89,15 @@ const Person = mongoose.model('Person', personSchema);
 // });
 
 var createAndSavePerson = function(done) {
-  
-  done(null /*, data*/);
+  var foo = new Person ({name: "Gus", age: 38,favoriteFoods: ["Chili", "Dog"] });
+    
+  foo.save(function(err, data) {
+    if (err) return console.error(err);
+    done(null, data)
+  });
 
 };
+
 
 /** 4) Create many People with `Model.create()` */
 
@@ -103,12 +108,17 @@ var createAndSavePerson = function(done) {
 // Create many people using `Model.create()`, using the function argument
 // 'arrayOfPeople'.
 
+var arrayOfPeople = [{name: "Annie" , age: 32, favoriteFoods:"Chicken" },
+                     {name: "Bear", age: 12, favoriteFoods: "Pizza"},
+                     {name: "Bob", age: 14, favoriteFoods: "Barf"}];
+
 var createManyPeople = function(arrayOfPeople, done) {
-    
-    done(null/*, data*/);
+  Person.create(arrayOfPeople, function (err, data) { //calling schema passing in array to data
+    if (err) return console.log(err); //checking errors
+    done(null, data); //
+  });
     
 };
-
 /** # C[R]UD part II - READ #
 /*  ========================= */
 
