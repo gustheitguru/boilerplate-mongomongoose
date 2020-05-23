@@ -225,9 +225,17 @@ var findEditThenSave = function(personId, done) {
 
 var findAndUpdate = function(personName, done) {
   var ageToSet = 20;
-
-  done(null/*, data*/);
+    //findOneAndUpdate takes 4 arguements in this case (find record, update variable, save, error handler)
+  Person.findOneAndUpdate({"name": personName}, //find
+                          { $set: { "age": ageToSet }}, // update to has to be writen this way so you do mess up doc
+                          {new : true}, // save
+                          function(err, data){ //error handler
+                            if(err) console.log(err);
+                            done(null, data)
+                            });
+  // done(null/*, data*/);
 };
+
 
 /** # CRU[D] part IV - DELETE #
 /*  =========================== */
