@@ -131,9 +131,10 @@ var createManyPeople = function(arrayOfPeople, done) {
 // Use the function argument `personName` as search key.
 
 var findPeopleByName = function(personName, done) {
-  
-  done(null/*, data*/);
-
+  Person.find({name: personName}, function (err, data) { //sending an object being passed in from the function
+    if (err) return console.log(err); //checking errors
+    done(null, data); //
+  });
 };
 
 /** 6) Use `Model.findOne()` */
@@ -145,9 +146,11 @@ var findPeopleByName = function(personName, done) {
 // using `Model.findOne() -> Person`. Use the function
 // argument `food` as search key
 
-var findOneByFood = function(food, done) {
-
-  done(null/*, data*/);
+ar findOneByFood = function(food, done) {
+  Person.findOne({favoriteFoods: food}, function (err, data) { //finding one instants of where food matches what is in favoritefoods
+    if (err) return console.log(err); //checking errors
+    done(null, data); //
+  });
   
 };
 
@@ -161,8 +164,10 @@ var findOneByFood = function(food, done) {
 // Use the function argument 'personId' as search key.
 
 var findPersonById = function(personId, done) {
-  
-  done(null/*, data*/);
+  Person.findById({ _id: personId }, function (err, data) { //passing Object with unique idea number for record
+    if (err) return console.log(err); //checking errors
+    done(null, data); //
+  });
   
 };
 
