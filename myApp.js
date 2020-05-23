@@ -98,7 +98,6 @@ var createAndSavePerson = function(done) {
 
 };
 
-
 /** 4) Create many People with `Model.create()` */
 
 // Sometimes you need to create many Instances of your Models,
@@ -119,6 +118,7 @@ var createManyPeople = function(arrayOfPeople, done) {
   });
     
 };
+
 /** # C[R]UD part II - READ #
 /*  ========================= */
 
@@ -131,7 +131,7 @@ var createManyPeople = function(arrayOfPeople, done) {
 // Use the function argument `personName` as search key.
 
 var findPeopleByName = function(personName, done) {
-  Person.find({name: personName}, function (err, data) { //sending an object being passed in from the function
+  Person.find({name: personName}, function (err, data) { //calling schema passing in array to data
     if (err) return console.log(err); //checking errors
     done(null, data); //
   });
@@ -146,7 +146,7 @@ var findPeopleByName = function(personName, done) {
 // using `Model.findOne() -> Person`. Use the function
 // argument `food` as search key
 
-ar findOneByFood = function(food, done) {
+var findOneByFood = function(food, done) {
   Person.findOne({favoriteFoods: food}, function (err, data) { //finding one instants of where food matches what is in favoritefoods
     if (err) return console.log(err); //checking errors
     done(null, data); //
@@ -236,7 +236,6 @@ var findAndUpdate = function(personName, done) {
   // done(null/*, data*/);
 };
 
-
 /** # CRU[D] part IV - DELETE #
 /*  =========================== */
 
@@ -267,17 +266,15 @@ var removeById = function(personId, done) {
 // containing the outcome of the operation, and the number of items affected.
 // Don't forget to pass it to the `done()` callback, since we use it in tests.
 
-var queryChain = function(done) {
-  var foodToSearch = "burrito";
-  Person.find({"favoriteFoods": foodToSearch}). //finding item by food search
-         sort({ name: 1 }). // sorting name by accending with 1 and decending by -1
-         limit(2). // limiting search results by 2 items
-         select({age: 0}). // hiding age from return by using boolean 0 and making it visibel by 1
-         exec(function(err, data){ //error handler callback // exec and error function
+var removeManyPeople = function(done) {
+  var nameToRemove = "Mary";
+  Person.remove({"name": nameToRemove}, 
+                function(err, data){ //error handler callback
                             if(err) console.log(err);
                             done(null, data)
                             });
-};
+
+}; 
 
 /** # C[R]UD part V -  More about Queries # 
 /*  ======================================= */
@@ -299,8 +296,14 @@ var queryChain = function(done) {
 
 var queryChain = function(done) {
   var foodToSearch = "burrito";
-  
-  done(null/*, data*/);
+  Person.find({"favoriteFoods": foodToSearch}). //finding item by food search
+         sort({ name: 1 }). // sorting name by accending with 1 and decending by -1
+         limit(2). // limiting search results by 2 items
+         select({age: 0}). // hiding age from return by using boolean 0 and making it visibel by 1
+         exec(function(err, data){ //error handler callback // exec and error function
+                            if(err) console.log(err);
+                            done(null, data)
+                            });
 };
 
 /** **Well Done !!**
