@@ -267,10 +267,16 @@ var removeById = function(personId, done) {
 // containing the outcome of the operation, and the number of items affected.
 // Don't forget to pass it to the `done()` callback, since we use it in tests.
 
-var removeManyPeople = function(done) {
-  var nameToRemove = "Mary";
-
-  done(null/*, data*/);
+var queryChain = function(done) {
+  var foodToSearch = "burrito";
+  Person.find({"favoriteFoods": foodToSearch}). //finding item by food search
+         sort({ name: 1 }). // sorting name by accending with 1 and decending by -1
+         limit(2). // limiting search results by 2 items
+         select({age: 0}). // hiding age from return by using boolean 0 and making it visibel by 1
+         exec(function(err, data){ //error handler callback // exec and error function
+                            if(err) console.log(err);
+                            done(null, data)
+                            });
 };
 
 /** # C[R]UD part V -  More about Queries # 
