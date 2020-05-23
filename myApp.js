@@ -249,7 +249,11 @@ var findAndUpdate = function(personName, done) {
 
 var removeById = function(personId, done) {
   
-  done(null/*, data*/);
+  Person.findByIdAndRemove(personId, // passing in ID to search for and function will remove the record
+                           function(err, data){ //error handler
+                            if(err) console.log(err);
+                            done(null, data)
+                            });
     
 };
 
